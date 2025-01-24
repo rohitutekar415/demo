@@ -13,32 +13,42 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Checkout the repository
+    # Step 1: Checkout the repository
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Set up Node.js for frontend and backend
+    # Step 2: Set up Node.js
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '16'
 
-    # Install backend dependencies
+    # Step 3: Install backend dependencies
     - name: Install backend dependencies
       working-directory: TODO/todo_backend
       run: npm install
 
-    # Run backend tests
+    # Step 4: Fix backend vulnerabilities
+    - name: Fix backend vulnerabilities
+      working-directory: TODO/todo_backend
+      run: npm audit fix || true
+
+    # Step 5: Run backend tests
     - name: Run backend tests
       working-directory: TODO/todo_backend
       run: npm test
 
-    # Install frontend dependencies
+    # Step 6: Install frontend dependencies
     - name: Install frontend dependencies
       working-directory: TODO/todo_frontend
       run: npm install
 
-    # Run frontend tests
+    # Step 7: Fix frontend vulnerabilities
+    - name: Fix frontend vulnerabilities
+      working-directory: TODO/todo_frontend
+      run: npm audit fix || true
+
+    # Step 8: Run frontend tests
     - name: Run frontend tests
       working-directory: TODO/todo_frontend
       run: npm test
@@ -48,6 +58,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Step 9: Deploy to production (Placeholder)
     - name: Deploy to Production
       run: |
         echo "Deployment logic goes here"
