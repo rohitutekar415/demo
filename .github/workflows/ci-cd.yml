@@ -22,21 +22,6 @@ jobs:
       # Debug - List files in the repository
       - name: Debug - List files
         run: ls -R /home/runner/work/demo/demo
-
-      # Debug - Show current directory
-      - name: Debug - Show current directory
-        run: pwd
-
-      # Step 2: Set up Node.js for Frontend
-      - name: Setup Node.js (Frontend)
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
-      - name: Debug - Show current directory
-        run: pwd
-  
-      - name: Install dependencies (Frontend)
-        working-directory: /home/runner/work/demo/demo/todo_frontend
-        run: npm install
-
+        
+      - name: Debug - List contents of the current directory
+        run: ls -d */
