@@ -43,6 +43,14 @@ jobs:
         working-directory: /home/runner/work/demo/demo/TODO/todo_frontend
         run: npm run build
         
+      - name: Install dependencies (Backend)
+        working-directory: /home/runner/work/demo/demo/TODO//backend
+        run: npm install
+        
+      - name: Run Backend Tests
+        working-directory: /home/runner/work/demo/demo/TODO/todo_backend
+        run: npm test
+        
 # Step 5: Deploy to Netlify using npm installation
       - name: Install Netlify CLI
         run: npm install -g netlify-cli
