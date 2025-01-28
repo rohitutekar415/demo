@@ -25,6 +25,7 @@ jobs:
         with:
           node-version: 16
           
+      # Debug - List files
       - name: Debug - List files
         run: ls -R /home/runner/work/demo/demo
 
@@ -42,7 +43,6 @@ jobs:
         working-directory: /home/runner/work/demo/demo/TODO/todo_frontend
         run: npm run build
 
-      
       # Step 5: Deploy to Netlify
       - name: Deploy to Netlify
         env:
@@ -52,6 +52,4 @@ jobs:
           curl -sL https://github.com/netlify/cli/releases/download/v10.1.0/netlify-cli-linux-amd64 > netlify-cli
           chmod +x netlify-cli
           mv netlify-cli /usr/local/bin/
-          netlify deploy --prod --dir=todo_frontend/build --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN
-
-
+          netlify deploy --prod --dir=/home/runner/work/demo/demo/TODO/todo_frontend/build --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN
