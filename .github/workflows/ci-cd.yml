@@ -29,3 +29,8 @@ jobs:
       - name: Install dependencies (Frontend)
         working-directory: /home/runner/work/demo/demo/TODO/todo_frontend
         run: npm install
+
+      # Step 4: Build Frontend
+      - name: Build Frontend
+        working-directory: /home/runner/work/demo/demo/TODO/todo_frontend
+        run: npm run build
