@@ -33,6 +33,10 @@ jobs:
         with:
           node-version: 16
 
+      - name: Debug - Show current directory
+        run: pwd
+  
       - name: Install dependencies (Frontend)
-        working-directory: ./todo_frontend
+        working-directory: /home/runner/work/demo/demo/todo_frontend
         run: npm install
+
