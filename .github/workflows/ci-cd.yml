@@ -41,6 +41,7 @@ jobs:
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}  # Added for personal account
           working-directory: /home/runner/work/demo/demo/TODO/todo_frontend
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
