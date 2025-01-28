@@ -44,7 +44,7 @@ jobs:
         run: npm run build
         
       - name: Install dependencies (Backend)
-        working-directory: /home/runner/work/demo/demo/TODO//backend
+        working-directory: /home/runner/work/demo/demo/TODO/todo_backend
         run: npm install
         
       - name: Run Backend Tests
