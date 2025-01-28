@@ -26,3 +26,7 @@ jobs:
       # Debug - Show current working directory
       - name: Debug - Show current directory
         run: pwd
+
+      - name: Debug - List files in working directory
+        run: ls -R /home/runner/work/demo/demo
+
