@@ -35,12 +35,12 @@ jobs:
 
       # Step 3: Install Frontend Dependencies
       - name: Install dependencies (Frontend)
-        working-directory: ./todo_frontend
+        working-directory: todo_frontend
         run: npm install
 
       # Step 4: Build Frontend
       - name: Build Frontend
-        working-directory: ./todo_frontend
+        working-directory: todo_frontend
         run: npm run build
 
       # Step 5: Set up Node.js for Backend
