@@ -20,42 +20,9 @@ jobs:
           fetch-depth: 0
 
       # Debug - List files in the root directory
-      - name: Debug - List files
+      - name: Debug - List files in root
         run: ls -R
 
-      # Step 2: Set up Node.js for Frontend
-      - name: Setup Node.js (Frontend)
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16 # Update to your frontend's Node.js version
-
-      # Step 3: Install Frontend Dependencies
-      - name: Install dependencies (Frontend)
-        working-directory: ./todo_frontend # Update to match your actual frontend directory
-        run: npm install
-
-      # Step 4: Build Frontend
-      - name: Build Frontend
-        working-directory: ./todo_frontend # Update to match your actual frontend directory
-        run: npm run build
-
-      # Step 5: Set up Node.js for Backend
-      - name: Setup Node.js (Backend)
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16 # Update to your backend's Node.js version
-
-      # Step 6: Install Backend Dependencies
-      - name: Install dependencies (Backend)
-        working-directory: ./todo_backend # Update to match your actual backend directory
-        run: npm install
-
-      # Step 7: Test Backend
-      - name: Run Backend Tests
-        working-directory: ./todo_backend # Update to match your actual backend directory
-        run: npm test
-
-      # Step 8: Deploy (Optional)
-      # Customize the deployment commands for your hosting platform.
-      - name: Deploy Application
-        run: echo "Add deployment commands here (e.g., Netlify, Vercel, Heroku)"
+      # Debug - Show current working directory
+      - name: Debug - Show current directory
+        run: pwd
