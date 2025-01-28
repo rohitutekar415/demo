@@ -25,3 +25,7 @@ jobs:
         
       - name: Debug - List contents of the current directory
         run: ls -d */
+        
+      - name: Install dependencies (Frontend)
+        working-directory: /home/runner/work/demo/demo/TODO/todo_frontend
+        run: npm install
