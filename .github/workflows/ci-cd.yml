@@ -33,23 +33,6 @@ jobs:
         with:
           node-version: 16
 
-      # Step 3: Install Frontend Dependencies
       - name: Install dependencies (Frontend)
-        working-directory: todo_frontend
-        run: npm install
-
-      # Step 4: Build Frontend
-      - name: Build Frontend
-        working-directory: todo_frontend
-        run: npm run build
-
-      # Step 5: Set up Node.js for Backend
-      - name: Setup Node.js (Backend)
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
-      # Step 6: Install Backend Dependencies
-      - name: Install dependencies (Backend)
-        working-directory: ./todo_backend
+        working-directory: ./todo_frontend
         run: npm install
