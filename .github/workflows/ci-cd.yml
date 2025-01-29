@@ -65,11 +65,6 @@ jobs:
         working-directory: /home/runner/work/demo/demo/TODO/todo_backend
         run: npm test
 
-      # Step 10: Verify Task in MongoDB
-      - name: Check Task in MongoDB
-        run: |
-          mongosh --host localhost --eval "printjson(db.TODO.find().toArray())"
-
       # Step 11: Install Netlify CLI for Deployment
       - name: Install Netlify CLI
         run: npm install -g netlify-cli
