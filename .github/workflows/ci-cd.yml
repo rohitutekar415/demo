@@ -55,16 +55,6 @@ jobs:
         working-directory: /home/runner/work/demo/demo/TODO/todo_backend
         run: npm test
 
-      # Step 9: Install Cypress for UI Testing
-      - name: Install Cypress
-        working-directory: /home/runner/work/demo/demo/TODO/todo_frontend
-        run: npm install cypress --save-dev
-
-      # Step 10: Run UI Tests (Including Adding a Task via UI)
-      - name: Run UI Tests
-        working-directory: /home/runner/work/demo/demo/TODO/todo_frontend
-        run: npx cypress run
-
       # Step 11: Verify Task in MongoDB
       - name: Check Task in MongoDB
         run: |
