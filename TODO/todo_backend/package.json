@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "test": "echo \"No tests specified\" && exit 1",
+  "test": "echo \"No tests specified\"",
   "start": "nodemon server.js"
   },
   "keywords": [],
-  "author": "atharva",
+  "author": "rohit",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
