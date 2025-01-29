@@ -47,6 +47,12 @@ jobs:
         working-directory: /home/runner/work/demo/demo/TODO/todo_backend
         run: npm install
         
+        # Step 8: Setup Environment Variables for MongoDB
+      - name: Setup Environment Variables
+        run: |
+          echo "MONGO_URI=mongodb://root:example@localhost:27017/TODO" >> $GITHUB_ENV
+
+        
       - name: Run Backend Tests
         working-directory: /home/runner/work/demo/demo/TODO/todo_backend
         run: npm test
