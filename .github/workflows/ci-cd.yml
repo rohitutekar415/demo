@@ -25,14 +25,6 @@ jobs:
         with:
           node-version: 16
           
-      # Debug - List files
-      - name: Debug - List files
-        run: ls -R /home/runner/work/demo/demo
-
-      # Debug - Show current directory
-      - name: Debug - Show current directory
-        run: pwd
-
       # Step 3: Install dependencies (Frontend)
       - name: Install dependencies (Frontend)
         working-directory: /home/runner/work/demo/demo/TODO/todo_frontend
@@ -43,27 +35,50 @@ jobs:
         working-directory: /home/runner/work/demo/demo/TODO/todo_frontend
         run: npm run build
         
+      # Step 5: Install dependencies (Backend)
       - name: Install dependencies (Backend)
         working-directory: /home/runner/work/demo/demo/TODO/todo_backend
         run: npm install
         
-        # Step 8: Setup Environment Variables for MongoDB
+      # Step 6: Setup Environment Variables for MongoDB
       - name: Setup Environment Variables
         run: |
           echo "MONGO_URI=mongodb://root:example@localhost:27017/TODO" >> $GITHUB_ENV
 
-        
+      # Step 7: Start Backend
+      - name: Start Backend
+        working-directory: /home/runner/work/demo/demo/TODO/todo_backend
+        run: npm start & sleep 5
+
+      # Step 8: Run Backend Tests
       - name: Run Backend Tests
         working-directory: /home/runner/work/demo/demo/TODO/todo_backend
         run: npm test
-        
-# Step 5: Deploy to Netlify using npm installation
+
+      # Step 9: Install Cypress for UI Testing
+      - name: Install Cypress
+        working-directory: /home/runner/work/demo/demo/TODO/todo_frontend
+        run: npm install cypress --save-dev
+
+      # Step 10: Run UI Tests (Including Adding a Task via UI)
+      - name: Run UI Tests
+        working-directory: /home/runner/work/demo/demo/TODO/todo_frontend
+        run: npx cypress run
+
+      # Step 11: Verify Task in MongoDB
+      - name: Check Task in MongoDB
+        run: |
+          sudo apt-get install -y mongodb-clients
+          mongo --host localhost --eval "printjson(db.TODO.find().toArray())"
+
+      # Step 12: Install Netlify CLI for Deployment
       - name: Install Netlify CLI
         run: npm install -g netlify-cli
 
+      # Step 13: Deploy to Netlify
       - name: Deploy to Netlify
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: |
-         netlify deploy --prod --dir=/home/runner/work/demo/demo/TODO/todo_frontend/build --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN
+          netlify deploy --prod --dir=/home/runner/work/demo/demo/TODO/todo_frontend/build --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN
