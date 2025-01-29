@@ -53,10 +53,12 @@ jobs:
         run: |
           echo "MONGO_URI=mongodb://root:example@localhost:27017/TODO" >> $GITHUB_ENV
 
-      # Step 7: Start Backend
+      # Step 7: Start Backend and Check if it's Ready
       - name: Start Backend
         working-directory: /home/runner/work/demo/demo/TODO/todo_backend
-        run: npm start & sleep 5
+        run: |
+          npm start & 
+          sleep 10  # Increased sleep time for backend to start
 
       # Step 8: Run Backend Tests
       - name: Run Backend Tests
@@ -83,3 +85,18 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: |
           netlify deploy --prod --dir=/home/runner/work/demo/demo/TODO/todo_frontend/build --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN
+
+      # Step 13: Save Task Locally (Optional step)
+      - name: Save Task Locally
+        run: |
+          curl -X POST http://localhost:5000/add-task -d '{"task": "Sample task"}' -H "Content-Type: application/json"
+          
+      # Step 14: Verify Task Saved Locally
+      - name: Verify Task Saved Locally
+        run: |
+          if [ -f /home/runner/work/demo/demo/TODO/todo_backend/tasks.txt ]; then
+            echo "Task file exists and is not empty"
+          else
+            echo "Task file does not exist or is empty"
+            exit 1
+          fi
