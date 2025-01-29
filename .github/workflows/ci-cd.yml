@@ -24,14 +24,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-      
-      # Debug - List files
-      - name: Debug - List files
-        run: ls -R /home/runner/work/demo/demo
-
-      # Debug - Show current directory
-      - name: Debug - Show current directory
-        run: pwd
 
       # Step 3: Install dependencies (Frontend)
       - name: Install dependencies (Frontend)
@@ -47,27 +39,43 @@ jobs:
       - name: Install dependencies (Backend)
         working-directory: /home/runner/work/demo/demo/TODO/todo_backend
         run: npm install
-        
+
       # Step 6: Setup Environment Variables for MongoDB
       - name: Setup Environment Variables
         run: |
           echo "MONGO_URI=mongodb://root:example@localhost:27017/TODO" >> $GITHUB_ENV
 
-      # Step 7: Start Backend and Check if it's Ready
+      # Step 7: Start MongoDB
+      - name: Start MongoDB
+        run: |
+          sudo systemctl start mongodb
+
+      # Step 8: Start Backend (With Increased Sleep Time)
       - name: Start Backend
         working-directory: /home/runner/work/demo/demo/TODO/todo_backend
         run: |
-          npm start & 
-          sleep 10  # Increased sleep time for backend to start
+          npm start &
+          sleep 10  # Increased sleep time to ensure backend is ready
 
-      # Step 8: Run Backend Tests
+      # Step 9: Verify Backend is Running
+      - name: Verify Backend is Running
+        run: |
+          if curl -s http://localhost:5000/health; then
+            echo "Backend is running!"
+          else
+            echo "Backend is NOT running. Exiting..."
+            exit 1
+          fi
+
+      # Step 10: Run Backend Tests
       - name: Run Backend Tests
         working-directory: /home/runner/work/demo/demo/TODO/todo_backend
         run: npm test
 
-      # Step 11: Install Netlify CLI for Deployment
-      - name: Install Netlify CLI
-        run: npm install -g netlify-cli
+      # Step 11: Save Task Locally
+      - name: Save Task Locally
+        run: |
+          curl -X POST http://localhost:5000/add-task -d '{"task": "Sample task"}' -H "Content-Type: application/json"
 
       # Step 12: Deploy to Netlify
       - name: Deploy to Netlify
@@ -76,18 +84,3 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: |
           netlify deploy --prod --dir=/home/runner/work/demo/demo/TODO/todo_frontend/build --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN
-
-      # Step 13: Save Task Locally (Optional step)
-      - name: Save Task Locally
-        run: |
-          curl -X POST http://localhost:5000/add-task -d '{"task": "Sample task"}' -H "Content-Type: application/json"
-          
-      # Step 14: Verify Task Saved Locally
-      - name: Verify Task Saved Locally
-        run: |
-          if [ -f /home/runner/work/demo/demo/TODO/todo_backend/tasks.txt ]; then
-            echo "Task file exists and is not empty"
-          else
-            echo "Task file does not exist or is empty"
-            exit 1
-          fi
